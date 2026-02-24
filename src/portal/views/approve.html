@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZorgAgent — Weekbericht goedkeuren</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f4f0;
+      color: #1a2e1a;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      padding: 24px 0;
+    }
+    .header h1 {
+      font-size: 24px;
+      color: #2d5a2d;
+    }
+    .header .subtitle {
+      color: #666;
+      margin-top: 4px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+    .bewoner-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d5a2d;
+      margin-bottom: 16px;
+    }
+    .weekbericht {
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: #333;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn-approve {
+      background: #2d8a2d;
+      color: white;
+    }
+    .btn-approve:hover {
+      background: #247524;
+    }
+    .btn-edit {
+      background: #e8e8e8;
+      color: #333;
+    }
+    .footer {
+      text-align: center;
+      color: #999;
+      font-size: 13px;
+      margin-top: 24px;
+    }
+    .sent-to {
+      background: #f8f8f8;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #666;
+      margin-top: 16px;
+    }
+    .error {
+      text-align: center;
+      padding: 48px 24px;
+      color: #666;
+    }
+    .success {
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .success .check {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🏠 ZorgAgent</h1>
+      <div class="subtitle">Weekbericht goedkeuren</div>
+    </div>
+    {{CONTENT}}
+  </div>
+  <div class="footer">
+    ZorgAgent — De warme laag om de zorg
+  </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "name": "@zorgagent/core",
+  "version": "0.1.0",
+  "description": "ZorgAgent — AI employee for Dutch healthcare institutions",
+  "type": "module",
+  "main": "src/index.ts",
+  "bin": {
+    "zorgagent": "./src/cli.ts"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "gateway": "tsx src/gateway/server.ts",
+    "test": "vitest",
+    "build": "tsdown"
+  },
+  "keywords": [
+    "agent",
+    "pi-package",
+    "ai-assistant"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "dependencies": {
+    "@mariozechner/pi-ai": "^0.54.0",
+    "@mariozechner/pi-coding-agent": "^0.54.0",
+    "@mariozechner/pi-tui": "^0.54.0",
+    "@sinclair/typebox": "^0.34.0",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "chalk": "^5.4.0",
+    "dotenv": "^17.0.0",
+    "express": "^5.2.0",
+    "nanoid": "^5.0.0",
+    "node-cron": "^4.2.1",
+    "openai": "^6.24.0",
+    "pino": "^10.3.1",
+    "qrcode-terminal": "^0.12.0",
+    "resend": "^6.9.2",
+    "twilio": "^5.12.2",
+    "ws": "^8.18.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/ws": "^8.5.0",
+    "tsdown": "^0.11.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
