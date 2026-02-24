@@ -7,6 +7,8 @@ import { getApproval, markApproved } from './portal/tokens.js'
 import { sendWeekberichtEmail } from './skills/zorgbericht/send.js'
 import { logger, audit } from './core/logger.js'
 import { getDashboardStats, getAdminStats, getBewonersWithHighlights } from './api/stats.js'
+import { triggerCheckinNow, triggerWeekberichtenNow, exportAuditLog, exportBewonersData, getFullAuditLog } from './api/actions.js'
+import { getMedewerkers, getInstelling } from './runtime.js'
 
 // --- Message handler registry (for WhatsApp webhook) ---
 
@@ -75,6 +77,72 @@ export function createApp(): express.Application {
       res.json(getBewonersWithHighlights())
     } catch (err) {
       logger.error({ err }, 'API error: /api/bewoners')
+      res.status(500).json({ error: 'Internal error' })
+    }
+  })
+
+  // --- Action endpoints ---
+
+  app.post('/api/trigger/checkin', async (_req, res) => {
+    try {
+      // Get medewerkers from the running config
+      const result = await triggerCheckinNow(getMedewerkers())
+      res.json(result)
+    } catch (err) {
+      logger.error({ err }, 'API error: trigger checkin')
+      res.status(500).json({ error: 'Failed to trigger check-in' })
+    }
+  })
+
+  app.post('/api/trigger/weekberichten', async (_req, res) => {
+    try {
+      await triggerWeekberichtenNow('huiselijk', getInstelling(), getMedewerkers())
+      res.json({ success: true })
+    } catch (err) {
+      logger.error({ err }, 'API error: trigger weekberichten')
+      res.status(500).json({ error: 'Failed to trigger weekberichten' })
+    }
+  })
+
+  app.get('/api/audit', (_req, res) => {
+    try {
+      const limit = parseInt(String(_req.query.limit)) || 100
+      res.json(getFullAuditLog(limit))
+    } catch (err) {
+      logger.error({ err }, 'API error: /api/audit')
+      res.status(500).json({ error: 'Internal error' })
+    }
+  })
+
+  app.get('/api/export/audit', (_req, res) => {
+    try {
+      const data = exportAuditLog()
+      res.setHeader('Content-Disposition', 'attachment; filename=zorgagent-audit-log.json')
+      res.json(data)
+    } catch (err) {
+      logger.error({ err }, 'API error: export audit')
+      res.status(500).json({ error: 'Internal error' })
+    }
+  })
+
+  app.get('/api/export/bewoners', (_req, res) => {
+    try {
+      const data = exportBewonersData()
+      res.setHeader('Content-Disposition', 'attachment; filename=zorgagent-bewoners-export.json')
+      res.json(data)
+    } catch (err) {
+      logger.error({ err }, 'API error: export bewoners')
+      res.status(500).json({ error: 'Internal error' })
+    }
+  })
+
+  app.get('/api/export/dashboard', (_req, res) => {
+    try {
+      const data = getDashboardStats()
+      res.setHeader('Content-Disposition', 'attachment; filename=zorgagent-dashboard-export.json')
+      res.json(data)
+    } catch (err) {
+      logger.error({ err }, 'API error: export dashboard')
       res.status(500).json({ error: 'Internal error' })
     }
   })

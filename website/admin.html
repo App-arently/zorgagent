@@ -88,7 +88,7 @@
         <div class="bg-night-900 rounded-xl border border-white/5 overflow-hidden">
           <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
             <h2 class="font-display font-semibold">Instellingen</h2>
-            <button class="text-xs bg-zorg-500/20 text-zorg-400 px-3 py-1.5 rounded-lg hover:bg-zorg-500/30 transition">+ Nieuwe instelling</button>
+            <button onclick="alert('Onboarding flow komt binnenkort. Neem contact op via WhatsApp.')" class="text-xs bg-zorg-500/20 text-zorg-400 px-3 py-1.5 rounded-lg hover:bg-zorg-500/30 transition">+ Nieuwe instelling</button>
           </div>
           <table class="w-full text-sm">
             <thead>
@@ -308,19 +308,19 @@
         <div class="bg-night-900 rounded-xl border border-white/5 p-6">
           <h2 class="font-display font-semibold mb-4">Acties</h2>
           <div class="space-y-2">
-            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+            <button onclick="triggerAction('/api/trigger/checkin', this)" class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
               <i data-lucide="send" class="w-4 h-4 text-zorg-400"></i>
               <span>Check-in nu triggeren</span>
             </button>
-            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+            <button onclick="triggerAction('/api/trigger/weekberichten', this)" class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
               <i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i>
               <span>Weekberichten nu genereren</span>
             </button>
-            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+            <button onclick="window.open('/api/export/audit','_blank')" class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
               <i data-lucide="download" class="w-4 h-4 text-blue-400"></i>
               <span>AVG-logboek exporteren</span>
             </button>
-            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+            <button onclick="window.open('/api/audit?limit=500','_blank')" class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
               <i data-lucide="terminal" class="w-4 h-4 text-amber-400"></i>
               <span>Audit log bekijken</span>
             </button>
@@ -389,6 +389,27 @@
 
       } catch (err) {
         console.error('Failed to load admin:', err);
+      }
+    }
+
+    async function triggerAction(url, btn) {
+      const original = btn.querySelector('span').textContent;
+      btn.querySelector('span').textContent = 'Bezig...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(url, { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          btn.querySelector('span').textContent = '✅ Gedaan!';
+          setTimeout(() => { btn.querySelector('span').textContent = original; btn.disabled = false; }, 3000);
+          loadAdmin();
+        } else {
+          btn.querySelector('span').textContent = '❌ Mislukt';
+          setTimeout(() => { btn.querySelector('span').textContent = original; btn.disabled = false; }, 3000);
+        }
+      } catch (err) {
+        btn.querySelector('span').textContent = '❌ Fout';
+        setTimeout(() => { btn.querySelector('span').textContent = original; btn.disabled = false; }, 3000);
       }
     }
 

@@ -5,6 +5,7 @@ import { sendCheckins } from './core/checkin.js'
 import { setupHandlers, registerMedewerker } from './channels/whatsapp/handlers.js'
 import { startServer } from './server.js'
 import { runWeekberichtFlow } from './skills/zorgbericht/approve.js'
+import { setMedewerkers, setInstelling, getMedewerkers } from './runtime.js'
 
 // --- Config (hardcoded for MVP, later from config.yaml) ---
 
@@ -20,6 +21,10 @@ const MEDEWERKERS = [
 if (config.TEST_PHONE_NUMBER) {
   MEDEWERKERS[0].telefoon = config.TEST_PHONE_NUMBER.replace('+', '')
 }
+
+// Share config with server/api
+setInstelling(INSTELLING)
+setMedewerkers(MEDEWERKERS)
 
 // --- Start ---
 
@@ -40,7 +45,7 @@ async function main() {
 
   // Daily check-in at 19:00
   scheduleDaily('checkin', '19:00', async () => {
-    await sendCheckins(MEDEWERKERS.map(m => ({ naam: m.naam, telefoon: m.telefoon })))
+    await sendCheckins(getMedewerkers().map(m => ({ naam: m.naam, telefoon: m.telefoon })))
   })
 
   // Weekly weekbericht on Friday 14:00
@@ -48,7 +53,7 @@ async function main() {
     await runWeekberichtFlow(
       TOON,
       INSTELLING,
-      MEDEWERKERS.map(m => ({ naam: m.naam, telefoon: m.telefoon }))
+      getMedewerkers().map(m => ({ naam: m.naam, telefoon: m.telefoon }))
     )
   })
 

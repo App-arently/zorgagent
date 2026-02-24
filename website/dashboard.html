@@ -57,7 +57,7 @@
         <p class="text-gray-500 text-sm mt-1" id="week-label">Week 9 — 17 t/m 23 februari 2026</p>
       </div>
       <div class="flex gap-2">
-        <button class="text-sm bg-white border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition flex items-center gap-2">
+        <button onclick="exportDashboard()" class="text-sm bg-white border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition flex items-center gap-2">
           <i data-lucide="download" class="w-4 h-4"></i> Export
         </button>
       </div>
@@ -291,7 +291,7 @@
     <div class="mt-6 bg-white rounded-xl border border-gray-200 p-6">
       <div class="flex items-center justify-between mb-6">
         <h2 class="font-display font-semibold text-lg">Recente activiteit</h2>
-        <button class="text-xs text-zorg-600 hover:underline">Bekijk alles →</button>
+        <button onclick="window.open('/api/audit?limit=500','_blank')" class="text-xs text-zorg-600 hover:underline">Bekijk alles →</button>
       </div>
       <div class="space-y-3 text-sm" id="recent-events">
         <div class="flex items-center gap-3 text-gray-600">
@@ -433,8 +433,11 @@
       }
     }
 
+    function exportDashboard() {
+      window.open('/api/export/dashboard', '_blank');
+    }
+
     loadDashboard();
-    // Refresh every 30 seconds
     setInterval(loadDashboard, 30000);
   </script>
 </body>
