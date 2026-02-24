@@ -53,31 +53,31 @@
     </div>
 
     <!-- TOP STATS -->
-    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8" id="admin-stats">
       <div class="bg-night-900 rounded-xl border border-white/5 p-5">
         <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">Instellingen</div>
-        <div class="font-display font-bold text-3xl">1</div>
-        <div class="text-xs text-gray-600 mt-1">1 actief · 0 trial</div>
+        <div class="font-display font-bold text-3xl stat-value">1</div>
+        <div class="text-xs text-gray-600 mt-1 stat-sub">1 actief · 0 trial</div>
       </div>
       <div class="bg-night-900 rounded-xl border border-white/5 p-5">
         <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">Afdelingen</div>
-        <div class="font-display font-bold text-3xl">1</div>
-        <div class="text-xs text-gray-600 mt-1">Zonnebloom</div>
+        <div class="font-display font-bold text-3xl stat-value">1</div>
+        <div class="text-xs text-gray-600 mt-1 stat-sub">Zonnebloom</div>
       </div>
       <div class="bg-night-900 rounded-xl border border-white/5 p-5">
         <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">Medewerkers</div>
-        <div class="font-display font-bold text-3xl">5</div>
-        <div class="text-xs text-gray-600 mt-1">5 actief</div>
+        <div class="font-display font-bold text-3xl stat-value">-</div>
+        <div class="text-xs text-gray-600 mt-1 stat-sub">actief</div>
       </div>
       <div class="bg-night-900 rounded-xl border border-white/5 p-5">
         <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">MRR</div>
-        <div class="font-display font-bold text-3xl text-zorg-400">€0</div>
-        <div class="text-xs text-gray-600 mt-1">Pilot fase</div>
+        <div class="font-display font-bold text-3xl text-zorg-400 stat-value">€0</div>
+        <div class="text-xs text-gray-600 mt-1 stat-sub">Pilot fase</div>
       </div>
       <div class="bg-night-900 rounded-xl border border-white/5 p-5">
         <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">LLM kosten</div>
-        <div class="font-display font-bold text-3xl text-amber-400">€4.20</div>
-        <div class="text-xs text-gray-600 mt-1">deze maand</div>
+        <div class="font-display font-bold text-3xl text-amber-400 stat-value">-</div>
+        <div class="text-xs text-gray-600 mt-1 stat-sub">deze maand</div>
       </div>
     </div>
 
@@ -123,7 +123,7 @@
                 <td class="px-6 py-4">
                   <div class="flex items-center gap-2">
                     <div class="w-16 h-1.5 bg-white/5 rounded-full overflow-hidden">
-                      <div class="h-full bg-zorg-500 rounded-full" style="width: 92%"></div>
+                      <div class="h-full bg-zorg-500 rounded-full metric-bar" style="width: 92%"></div>
                     </div>
                     <span class="text-gray-400 text-xs">92%</span>
                   </div>
@@ -218,20 +218,20 @@
         <!-- WEEKLY METRICS -->
         <div class="bg-night-900 rounded-xl border border-white/5 p-6">
           <h2 class="font-display font-semibold mb-4">Week 9 metrics</h2>
-          <div class="space-y-4">
+          <div class="space-y-4" id="weekly-metrics">
             <div>
               <div class="flex items-center justify-between text-sm mb-1">
                 <span class="text-gray-400">Check-ins verzonden</span>
-                <span class="font-medium">25</span>
+                <span class="font-medium metric-val">25</span>
               </div>
               <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-zorg-500 rounded-full" style="width: 100%"></div>
+                <div class="h-full bg-zorg-500 rounded-full metric-bar" style="width: 100%"></div>
               </div>
             </div>
             <div>
               <div class="flex items-center justify-between text-sm mb-1">
                 <span class="text-gray-400">Check-ins beantwoord</span>
-                <span class="font-medium">23</span>
+                <span class="font-medium metric-val">23</span>
               </div>
               <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-zorg-500 rounded-full" style="width: 92%"></div>
@@ -240,25 +240,25 @@
             <div>
               <div class="flex items-center justify-between text-sm mb-1">
                 <span class="text-gray-400">Weekberichten gegenereerd</span>
-                <span class="font-medium">15</span>
+                <span class="font-medium metric-val">15</span>
               </div>
               <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-purple-500 rounded-full" style="width: 100%"></div>
+                <div class="h-full bg-purple-500 rounded-full metric-bar" style="width: 100%"></div>
               </div>
             </div>
             <div>
               <div class="flex items-center justify-between text-sm mb-1">
                 <span class="text-gray-400">Goedgekeurd & verstuurd</span>
-                <span class="font-medium">14</span>
+                <span class="font-medium metric-val">14</span>
               </div>
               <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                <div class="h-full bg-pink-500 rounded-full" style="width: 93%"></div>
+                <div class="h-full bg-pink-500 rounded-full metric-bar" style="width: 93%"></div>
               </div>
             </div>
             <div>
               <div class="flex items-center justify-between text-sm mb-1">
                 <span class="text-gray-400">Emails geopend</span>
-                <span class="font-medium">11</span>
+                <span class="font-medium metric-val">11</span>
               </div>
               <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
                 <div class="h-full bg-blue-500 rounded-full" style="width: 79%"></div>
@@ -270,7 +270,7 @@
         <!-- RECENT EVENTS -->
         <div class="bg-night-900 rounded-xl border border-white/5 p-6">
           <h2 class="font-display font-semibold mb-4">Event log</h2>
-          <div class="space-y-3 text-xs">
+          <div class="space-y-3 text-xs" id="event-log">
             <div class="flex gap-3">
               <span class="text-gray-600 w-14 shrink-0">13:19</span>
               <span class="w-1.5 h-1.5 bg-zorg-500 rounded-full mt-1.5 shrink-0"></span>
@@ -331,6 +331,69 @@
     </div>
   </div>
 
-  <script>lucide.createIcons();</script>
+  <script>
+    lucide.createIcons();
+
+    async function loadAdmin() {
+      try {
+        const data = await fetch('/api/admin').then(r => r.json());
+        const p = data.platform;
+        const w = data.thisWeek;
+
+        // Top stats
+        const statEls = document.querySelectorAll('#admin-stats > div');
+        const vals = [p.instellingen, p.afdelingen, p.medewerkers, `€${p.mrr}`, `€${data.allTime.totalCheckins ? (data.allTime.totalCheckins * 0.02 + data.allTime.totalWeekberichten * 0.08).toFixed(2) : '0.00'}`];
+        const subs = [`${p.instellingen} actief`, ``, `${p.medewerkers} actief`, p.mrr === 0 ? 'Pilot fase' : '', `deze maand`];
+        statEls.forEach((el, i) => {
+          if (vals[i] !== undefined) {
+            el.querySelector('.stat-value').textContent = vals[i];
+            if (subs[i]) el.querySelector('.stat-sub').textContent = subs[i];
+          }
+        });
+
+        // Weekly metrics
+        const metrics = [
+          { val: w.checkins.expected, pct: 100 },
+          { val: w.checkins.received, pct: w.checkins.percentage },
+          { val: w.weekberichten.total, pct: 100 },
+          { val: w.weekberichten.sent, pct: w.weekberichten.percentage },
+        ];
+        document.querySelectorAll('#weekly-metrics > div').forEach((el, i) => {
+          if (metrics[i]) {
+            el.querySelector('.metric-val').textContent = metrics[i].val;
+            el.querySelector('.metric-bar').style.width = `${metrics[i].pct}%`;
+          }
+        });
+
+        // Event log
+        const logEl = document.getElementById('event-log');
+        if (data.events.length > 0) {
+          const eventColors = {
+            whatsapp_sent: 'bg-zorg-500', whatsapp_received: 'bg-blue-500',
+            checkin_sent: 'bg-zorg-500', checkin_received: 'bg-blue-500',
+            weekbericht_generated: 'bg-purple-500', weekbericht_approved_and_sent: 'bg-pink-500',
+            approval_link_sent: 'bg-amber-500', system_start: 'bg-gray-600',
+          };
+          logEl.innerHTML = data.events.slice(0, 10).map(e => {
+            const time = e.time ? new Date(e.time).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) : '';
+            const color = eventColors[e.event] || 'bg-gray-600';
+            const desc = e.event?.replace(/_/g, ' ') + (e.bewoner ? `: ${e.bewoner}` : '') + (e.medewerker ? `: ${e.medewerker}` : '');
+            return `
+              <div class="flex gap-3">
+                <span class="text-gray-600 w-14 shrink-0">${time}</span>
+                <span class="w-1.5 h-1.5 ${color} rounded-full mt-1.5 shrink-0"></span>
+                <span class="text-gray-400">${desc}</span>
+              </div>`;
+          }).join('');
+        }
+
+      } catch (err) {
+        console.error('Failed to load admin:', err);
+      }
+    }
+
+    loadAdmin();
+    setInterval(loadAdmin, 30000);
+  </script>
 </body>
 </html>

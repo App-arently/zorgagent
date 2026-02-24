@@ -259,7 +259,7 @@
         <h2 class="font-display font-semibold text-lg">Bewoner highlights deze week</h2>
         <span class="text-xs text-gray-400">Uit check-in data</span>
       </div>
-      <div class="grid md:grid-cols-3 gap-4">
+      <div class="grid md:grid-cols-3 gap-4" id="bewoner-highlights">
         <div class="bg-zorg-50 rounded-lg p-4 border border-zorg-100">
           <div class="flex items-center gap-2 mb-2">
             <span class="text-lg">☀️</span>
@@ -293,7 +293,7 @@
         <h2 class="font-display font-semibold text-lg">Recente activiteit</h2>
         <button class="text-xs text-zorg-600 hover:underline">Bekijk alles →</button>
       </div>
-      <div class="space-y-3 text-sm">
+      <div class="space-y-3 text-sm" id="recent-events">
         <div class="flex items-center gap-3 text-gray-600">
           <div class="w-1.5 h-1.5 bg-zorg-500 rounded-full shrink-0"></div>
           <span class="text-gray-400 w-32 shrink-0">Vandaag 19:02</span>
@@ -324,6 +324,118 @@
 
   </div>
 
-  <script>lucide.createIcons();</script>
+  <script>
+    lucide.createIcons();
+
+    const COLORS = ['bg-zorg-500','bg-purple-500','bg-blue-500','bg-amber-500','bg-rose-500','bg-teal-500','bg-indigo-500'];
+    const BG_COLORS = ['bg-zorg-100','bg-purple-100','bg-blue-100','bg-amber-100','bg-rose-100','bg-teal-100','bg-indigo-100'];
+    const TXT_COLORS = ['text-zorg-700','text-purple-700','text-blue-700','text-amber-700','text-rose-700','text-teal-700','text-indigo-700'];
+
+    async function loadDashboard() {
+      try {
+        const [stats, bewoners] = await Promise.all([
+          fetch('/api/dashboard').then(r => r.json()),
+          fetch('/api/bewoners').then(r => r.json()),
+        ]);
+
+        // Week label
+        document.getElementById('week-label').textContent = stats.weekLabel;
+
+        // Stat cards
+        document.getElementById('checkin-count').textContent = `${stats.checkins.received}/${stats.checkins.expected}`;
+        document.getElementById('checkin-trend').textContent = `${stats.checkins.percentage}%`;
+        document.querySelector('#checkin-count').closest('.bg-white').querySelector('.bar').style.width = `${stats.checkins.percentage}%`;
+
+        document.getElementById('weekbericht-count').textContent = `${stats.weekberichten.sent}/${stats.weekberichten.total}`;
+        document.querySelector('#weekbericht-count').closest('.bg-white').querySelector('.bar').style.width = `${stats.weekberichten.percentage}%`;
+
+        // Team activity
+        const teamEl = document.getElementById('team-activity');
+        if (stats.team.length > 0) {
+          teamEl.innerHTML = stats.team.map((m, i) => `
+            <div class="flex items-center gap-4">
+              <div class="w-8 h-8 ${BG_COLORS[i % BG_COLORS.length]} rounded-full flex items-center justify-center shrink-0">
+                <span class="${TXT_COLORS[i % TXT_COLORS.length]} text-xs font-semibold">${m.initials}</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-sm font-medium truncate">${m.naam}</span>
+                  <span class="text-sm text-gray-500">${m.checkins}/${m.total}</span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="bar h-full ${COLORS[i % COLORS.length]} rounded-full" style="width: ${m.percentage}%"></div>
+                </div>
+              </div>
+              <span class="text-sm font-semibold text-gray-600 w-12 text-right">${m.percentage}%</span>
+            </div>
+          `).join('');
+        }
+
+        // Weekbericht status
+        const wbEl = document.getElementById('weekbericht-status');
+        if (stats.weekberichten.items.length > 0) {
+          const statusMap = {
+            sent: '<span class="text-xs font-medium bg-zorg-100 text-zorg-700 px-2.5 py-1 rounded-full">✅ Verstuurd</span>',
+            pending: '<span class="text-xs font-medium bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">⏳ Wacht op goedkeuring</span>',
+            none: '<span class="text-xs font-medium bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full">— Te weinig data</span>',
+          };
+          wbEl.innerHTML = stats.weekberichten.items.map(w => `
+            <div class="flex items-center justify-between py-2 border-b border-gray-50">
+              <div>
+                <div class="text-sm font-medium">${w.bewoner}</div>
+                <div class="text-xs text-gray-400">${w.familie || ''}</div>
+              </div>
+              ${statusMap[w.status] || statusMap.none}
+            </div>
+          `).join('');
+        }
+
+        // Bewoner highlights
+        const bhEl = document.querySelector('#bewoner-highlights');
+        if (bhEl && bewoners.length > 0) {
+          bhEl.innerHTML = bewoners.map(b => `
+            <div class="bg-zorg-50 rounded-lg p-4 border border-zorg-100">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="font-medium text-sm">${b.naam}</span>
+              </div>
+              <p class="text-sm text-gray-600 leading-relaxed">${b.samenvatting || 'Geen data deze week.'}</p>
+              <div class="text-xs text-gray-400 mt-2">${b.checkins} check-ins · ${b.medewerkers} medewerkers</div>
+            </div>
+          `).join('');
+        }
+
+        // Events
+        const evEl = document.querySelector('#recent-events');
+        if (evEl && stats.events.length > 0) {
+          const eventLabels = {
+            whatsapp_sent: { color: 'bg-zorg-500', label: (e) => `WhatsApp verstuurd naar ${e.to || ''}` },
+            whatsapp_received: { color: 'bg-blue-500', label: (e) => `Bericht ontvangen van ${e.from || ''}` },
+            checkin_sent: { color: 'bg-zorg-500', label: (e) => `Check-in verstuurd naar ${e.medewerker || ''}` },
+            checkin_received: { color: 'bg-blue-500', label: (e) => `Check-in ontvangen: ${e.medewerker || ''} (${e.bewoners || 0} bewoners)` },
+            weekbericht_generated: { color: 'bg-purple-500', label: (e) => `Weekbericht gegenereerd: ${e.bewoner || ''}` },
+            weekbericht_approved_and_sent: { color: 'bg-pink-500', label: (e) => `Weekbericht goedgekeurd & verstuurd: ${e.bewoner || ''}` },
+            approval_link_sent: { color: 'bg-amber-500', label: (e) => `Goedkeuringslink verstuurd: ${e.bewoner || ''}` },
+            system_start: { color: 'bg-gray-500', label: () => 'Systeem gestart' },
+          };
+          evEl.innerHTML = stats.events.slice(0, 10).map(e => {
+            const def = eventLabels[e.event] || { color: 'bg-gray-400', label: () => e.event };
+            return `
+              <div class="flex items-center gap-3 text-gray-600">
+                <div class="w-1.5 h-1.5 ${def.color} rounded-full shrink-0"></div>
+                <span class="text-gray-400 w-32 shrink-0">${e.time}</span>
+                <span>${def.label(e)}</span>
+              </div>`;
+          }).join('');
+        }
+
+      } catch (err) {
+        console.error('Failed to load dashboard:', err);
+      }
+    }
+
+    loadDashboard();
+    // Refresh every 30 seconds
+    setInterval(loadDashboard, 30000);
+  </script>
 </body>
 </html>

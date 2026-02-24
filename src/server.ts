@@ -6,6 +6,7 @@ import { config } from './config.js'
 import { getApproval, markApproved } from './portal/tokens.js'
 import { sendWeekberichtEmail } from './skills/zorgbericht/send.js'
 import { logger, audit } from './core/logger.js'
+import { getDashboardStats, getAdminStats, getBewonersWithHighlights } from './api/stats.js'
 
 // --- Message handler registry (for WhatsApp webhook) ---
 
@@ -48,6 +49,34 @@ export function createApp(): express.Application {
   // --- Health check ---
   app.get('/health', (_req, res) => {
     res.json({ status: 'ok', service: 'zorgagent' })
+  })
+
+  // --- API endpoints ---
+  app.get('/api/dashboard', (_req, res) => {
+    try {
+      res.json(getDashboardStats())
+    } catch (err) {
+      logger.error({ err }, 'API error: /api/dashboard')
+      res.status(500).json({ error: 'Internal error' })
+    }
+  })
+
+  app.get('/api/admin', (_req, res) => {
+    try {
+      res.json(getAdminStats())
+    } catch (err) {
+      logger.error({ err }, 'API error: /api/admin')
+      res.status(500).json({ error: 'Internal error' })
+    }
+  })
+
+  app.get('/api/bewoners', (_req, res) => {
+    try {
+      res.json(getBewonersWithHighlights())
+    } catch (err) {
+      logger.error({ err }, 'API error: /api/bewoners')
+      res.status(500).json({ error: 'Internal error' })
+    }
   })
 
   // --- Twilio WhatsApp webhook ---
