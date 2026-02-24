@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZorgAgent — Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            zorg: { 50:'#f0fdf4',100:'#dcfce7',200:'#bbf7d0',300:'#86efac',400:'#4ade80',500:'#22c55e',600:'#16a34a',700:'#15803d',800:'#166534',900:'#14532d' },
+            night: { 800:'#0f1117',900:'#0a0b0e',950:'#060608' }
+          },
+          fontFamily: { sans:['Inter','system-ui','sans-serif'], display:['Space Grotesk','system-ui','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    html { font-family: 'Inter', system-ui, sans-serif; }
+    .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-night-950 text-white antialiased min-h-screen">
+
+  <!-- NAV -->
+  <nav class="bg-night-900 border-b border-white/5 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 bg-zorg-500 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-xs">Z</span>
+        </div>
+        <span class="font-display font-bold">ZorgAgent</span>
+        <span class="bg-red-500/20 text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ml-2">Admin</span>
+      </div>
+      <div class="flex items-center gap-6 text-sm">
+        <a href="/dashboard.html" class="text-gray-500 hover:text-white transition">Teamleider view</a>
+        <a href="/" class="text-gray-500 hover:text-white transition">Website</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- HEADER -->
+    <div class="mb-8">
+      <h1 class="font-display font-bold text-2xl">Platform overzicht</h1>
+      <p class="text-gray-500 text-sm mt-1">Alle instellingen · Systeem status · Revenue</p>
+    </div>
+
+    <!-- TOP STATS -->
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+      <div class="bg-night-900 rounded-xl border border-white/5 p-5">
+        <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">Instellingen</div>
+        <div class="font-display font-bold text-3xl">1</div>
+        <div class="text-xs text-gray-600 mt-1">1 actief · 0 trial</div>
+      </div>
+      <div class="bg-night-900 rounded-xl border border-white/5 p-5">
+        <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">Afdelingen</div>
+        <div class="font-display font-bold text-3xl">1</div>
+        <div class="text-xs text-gray-600 mt-1">Zonnebloom</div>
+      </div>
+      <div class="bg-night-900 rounded-xl border border-white/5 p-5">
+        <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">Medewerkers</div>
+        <div class="font-display font-bold text-3xl">5</div>
+        <div class="text-xs text-gray-600 mt-1">5 actief</div>
+      </div>
+      <div class="bg-night-900 rounded-xl border border-white/5 p-5">
+        <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">MRR</div>
+        <div class="font-display font-bold text-3xl text-zorg-400">€0</div>
+        <div class="text-xs text-gray-600 mt-1">Pilot fase</div>
+      </div>
+      <div class="bg-night-900 rounded-xl border border-white/5 p-5">
+        <div class="text-gray-500 text-xs uppercase tracking-wider mb-2">LLM kosten</div>
+        <div class="font-display font-bold text-3xl text-amber-400">€4.20</div>
+        <div class="text-xs text-gray-600 mt-1">deze maand</div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-6">
+
+      <!-- INSTELLINGEN LIST -->
+      <div class="lg:col-span-2">
+        <div class="bg-night-900 rounded-xl border border-white/5 overflow-hidden">
+          <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
+            <h2 class="font-display font-semibold">Instellingen</h2>
+            <button class="text-xs bg-zorg-500/20 text-zorg-400 px-3 py-1.5 rounded-lg hover:bg-zorg-500/30 transition">+ Nieuwe instelling</button>
+          </div>
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-gray-500 text-xs uppercase tracking-wider border-b border-white/5">
+                <th class="text-left px-6 py-3 font-medium">Instelling</th>
+                <th class="text-left px-6 py-3 font-medium">Afd.</th>
+                <th class="text-left px-6 py-3 font-medium">Modules</th>
+                <th class="text-left px-6 py-3 font-medium">Status</th>
+                <th class="text-left px-6 py-3 font-medium">Check-in rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/5 hover:bg-white/[0.02] transition">
+                <td class="px-6 py-4">
+                  <div class="font-medium">Zorgcentrum Zonnebloom</div>
+                  <div class="text-gray-600 text-xs">Aangemeld 20 feb 2026</div>
+                </td>
+                <td class="px-6 py-4 text-gray-400">1</td>
+                <td class="px-6 py-4">
+                  <div class="flex gap-1">
+                    <span class="bg-zorg-500/20 text-zorg-400 text-[10px] px-2 py-0.5 rounded-full">Bericht</span>
+                    <span class="bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded-full">Reputatie</span>
+                    <span class="bg-blue-500/20 text-blue-400 text-[10px] px-2 py-0.5 rounded-full">Werving</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-zorg-500 rounded-full"></span>
+                    <span class="text-zorg-400 text-xs">Actief</span>
+                  </span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-16 h-1.5 bg-white/5 rounded-full overflow-hidden">
+                      <div class="h-full bg-zorg-500 rounded-full" style="width: 92%"></div>
+                    </div>
+                    <span class="text-gray-400 text-xs">92%</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SYSTEM HEALTH -->
+        <div class="bg-night-900 rounded-xl border border-white/5 mt-6 p-6">
+          <h2 class="font-display font-semibold mb-4">Systeem status</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 bg-zorg-500 rounded-full"></span>
+              <div>
+                <div class="text-sm font-medium">WhatsApp</div>
+                <div class="text-xs text-gray-600">Twilio · connected</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 bg-zorg-500 rounded-full"></span>
+              <div>
+                <div class="text-sm font-medium">LLM</div>
+                <div class="text-xs text-gray-600">OpenRouter · ok</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 bg-zorg-500 rounded-full"></span>
+              <div>
+                <div class="text-sm font-medium">Email</div>
+                <div class="text-xs text-gray-600">Resend · ok</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 bg-zorg-500 rounded-full"></span>
+              <div>
+                <div class="text-sm font-medium">Portal</div>
+                <div class="text-xs text-gray-600">Express · port 3005</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COST BREAKDOWN -->
+        <div class="bg-night-900 rounded-xl border border-white/5 mt-6 p-6">
+          <h2 class="font-display font-semibold mb-4">Kosten deze maand</h2>
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-3 h-3 bg-blue-500 rounded-sm"></div>
+                <span class="text-sm text-gray-400">Check-in parsing (GPT-4o-mini)</span>
+              </div>
+              <span class="text-sm font-medium">€0.60</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-3 h-3 bg-purple-500 rounded-sm"></div>
+                <span class="text-sm text-gray-400">Weekbericht generatie (Claude)</span>
+              </div>
+              <span class="text-sm font-medium">€2.40</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-3 h-3 bg-zorg-500 rounded-sm"></div>
+                <span class="text-sm text-gray-400">Vacatureteksten (Claude)</span>
+              </div>
+              <span class="text-sm font-medium">€0.90</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-3 h-3 bg-amber-500 rounded-sm"></div>
+                <span class="text-sm text-gray-400">Twilio WhatsApp berichten</span>
+              </div>
+              <span class="text-sm font-medium">€0.30</span>
+            </div>
+            <div class="border-t border-white/5 pt-3 flex items-center justify-between">
+              <span class="text-sm text-gray-300 font-medium">Totaal</span>
+              <span class="text-sm font-bold text-amber-400">€4.20</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-300 font-medium">Bij €349/maand revenue</span>
+              <span class="text-sm font-bold text-zorg-400">1.2% van omzet</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="space-y-6">
+
+        <!-- WEEKLY METRICS -->
+        <div class="bg-night-900 rounded-xl border border-white/5 p-6">
+          <h2 class="font-display font-semibold mb-4">Week 9 metrics</h2>
+          <div class="space-y-4">
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="text-gray-400">Check-ins verzonden</span>
+                <span class="font-medium">25</span>
+              </div>
+              <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-zorg-500 rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="text-gray-400">Check-ins beantwoord</span>
+                <span class="font-medium">23</span>
+              </div>
+              <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-zorg-500 rounded-full" style="width: 92%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="text-gray-400">Weekberichten gegenereerd</span>
+                <span class="font-medium">15</span>
+              </div>
+              <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-purple-500 rounded-full" style="width: 100%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="text-gray-400">Goedgekeurd & verstuurd</span>
+                <span class="font-medium">14</span>
+              </div>
+              <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-pink-500 rounded-full" style="width: 93%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm mb-1">
+                <span class="text-gray-400">Emails geopend</span>
+                <span class="font-medium">11</span>
+              </div>
+              <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-500 rounded-full" style="width: 79%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT EVENTS -->
+        <div class="bg-night-900 rounded-xl border border-white/5 p-6">
+          <h2 class="font-display font-semibold mb-4">Event log</h2>
+          <div class="space-y-3 text-xs">
+            <div class="flex gap-3">
+              <span class="text-gray-600 w-14 shrink-0">13:19</span>
+              <span class="w-1.5 h-1.5 bg-zorg-500 rounded-full mt-1.5 shrink-0"></span>
+              <span class="text-gray-400">Weekbericht Mw De Vries goedgekeurd via portal</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-600 w-14 shrink-0">13:19</span>
+              <span class="w-1.5 h-1.5 bg-pink-500 rounded-full mt-1.5 shrink-0"></span>
+              <span class="text-gray-400">Email verstuurd → dochter@email.nl</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-600 w-14 shrink-0">13:18</span>
+              <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mt-1.5 shrink-0"></span>
+              <span class="text-gray-400">LLM call: claude-3.5-sonnet (weekbericht) — 938 tokens</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-600 w-14 shrink-0">19:15</span>
+              <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 shrink-0"></span>
+              <span class="text-gray-400">Check-in response: Karen de Jong → 2 bewoners</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-600 w-14 shrink-0">19:02</span>
+              <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 shrink-0"></span>
+              <span class="text-gray-400">Check-in response: Sandra Bakker → 3 bewoners</span>
+            </div>
+            <div class="flex gap-3">
+              <span class="text-gray-600 w-14 shrink-0">19:00</span>
+              <span class="w-1.5 h-1.5 bg-gray-600 rounded-full mt-1.5 shrink-0"></span>
+              <span class="text-gray-400">Cron: dagelijkse check-in → 5 medewerkers</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="bg-night-900 rounded-xl border border-white/5 p-6">
+          <h2 class="font-display font-semibold mb-4">Acties</h2>
+          <div class="space-y-2">
+            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+              <i data-lucide="send" class="w-4 h-4 text-zorg-400"></i>
+              <span>Check-in nu triggeren</span>
+            </button>
+            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+              <i data-lucide="file-text" class="w-4 h-4 text-purple-400"></i>
+              <span>Weekberichten nu genereren</span>
+            </button>
+            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+              <i data-lucide="download" class="w-4 h-4 text-blue-400"></i>
+              <span>AVG-logboek exporteren</span>
+            </button>
+            <button class="w-full text-left text-sm bg-white/5 hover:bg-white/10 border border-white/5 px-4 py-3 rounded-lg transition flex items-center gap-3">
+              <i data-lucide="terminal" class="w-4 h-4 text-amber-400"></i>
+              <span>Audit log bekijken</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
