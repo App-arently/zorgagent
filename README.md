@@ -127,4 +127,4 @@ ZorgAgent is in actieve ontwikkeling. De ZorgBericht module is operationeel.
 
 Gebouwd door **Youssef Hajar** — AI consultancy voor Nederlandse zorginstellingen.
 
-Interesse in een pilot? [youssef@hajar.ai](mailto:youssef@hajar.ai)
+Interesse in een pilot? [yhajar@biedkracht.nl](mailto:yhajar@biedkracht.nl)
